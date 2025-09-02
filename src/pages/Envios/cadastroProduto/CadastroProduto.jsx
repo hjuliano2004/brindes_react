@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import s from "./Cadastro.module.css";
+import axios from "axios";
 
 export function CadastroProduto(){
 
@@ -70,33 +71,20 @@ async function handleSubmit(e){
 
 
 
+
 async function requisitar(body) {
-  let url = "http://localhost:3000/produtos";
+  const url = "http://localhost:3000/produtos";
 
-  let geral = {
-    method: "POST",
-
-    body: JSON.stringify(body),
-
+  return axios.post(url, body, {
     headers: {
       "Content-Type": "application/json",
     },
-  };
-
-  try{
-    let response = await fetch(url, geral);
-
-    if(response.ok){
-        let json = await response.json();
-        return json;
-    }
-  throw new Error(response)
-  
-  }catch(e){
-    console.log(e);
-
+  })
+  .then(response => {
+    return response.data;
+  })
+  .catch(error => {
+    console.log(error);
     return null;
-  }
-
-
+  });
 }
