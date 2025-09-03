@@ -44,21 +44,21 @@ async function handleSubmit(e){
             
         <div>
             <label htmlFor="nome">Nome do produto:</label>
-            <input id="nome" type="text" ref={nome} />
+            <input id="nome" type="text" ref={nome} required />
         </div>
 
         <div >
             <label htmlFor="preco">Preço do produto:</label>
-            <input id="preco" type="number" ref={preco} />
+            <input id="preco" type="number" ref={preco} required />
         </div>
 
         </div>
 
         <label htmlFor="descricao">Descrição:</label>
-        <textArea id="descricao" className={s.textos} ref={descricao} />
+        <textArea id="descricao" className={s.textos} ref={descricao} required />
 
         <label htmlFor="url">URL da imagem</label>
-        <input id="url" type="text" className={s.textos} ref={imagem} />
+        <input id="url" type="text" className={s.textos} ref={imagem} required />
 
         <div className={s.btn}>
             <button type="submit">Cadastrar</button>
@@ -67,13 +67,8 @@ async function handleSubmit(e){
     </section>)
 }
 
-
-
-
-
-
 async function requisitar(body) {
-  const url = "http://localhost:3000/produtos";
+  const url = "http://localhost:3001/produtos";
 
   return axios.post(url, body, {
     headers: {
