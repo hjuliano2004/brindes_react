@@ -1,0 +1,44 @@
+.card{
+    border: 1px solid black;
+    border-radius: 5px;
+
+    padding: 5%;
+}
+
+.container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 1%;
+}
+
+.img{
+    width: 100%;
+}
+
+.img img{
+    width: 20%;
+}
+
+
+.btns{
+    text-align: right;
+    
+}
+
+.btns button{
+    margin: 2px;
+    padding: 2%;
+    border: 1px solid black;
+    font-weight: bold;
+    border-radius: 3px;
+}
+
+.bPreto{
+    background-color: black;
+    color: white;
+}
+
+.bBranco{
+    background-color: white;
+}

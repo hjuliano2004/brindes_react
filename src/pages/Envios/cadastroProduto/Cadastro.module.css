@@ -1,0 +1,38 @@
+.form{
+    text-align: center;
+    width: 70%;
+    margin: 0 auto;
+}
+
+.form form{
+    text-align: left;
+}
+
+.nomePreco{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    width: 100%;
+}
+
+
+
+.nomePreco input{
+    display: block;
+    width: 95%;
+}
+
+.textos{
+    width: 100%;
+}
+
+.btn{
+    width: 100%;
+    text-align: right;
+    margin: 10px;
+}
+
+.btn button{
+    background-color: rgb(91, 21, 255);
+    color: white;
+}
