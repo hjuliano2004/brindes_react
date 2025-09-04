@@ -42,3 +42,28 @@
 .bBranco{
     background-color: white;
 }
+
+.delete{
+     border: 2px dashed black;
+     width: 30%;
+     text-align: center;
+     background-color: white;
+     
+
+     position: fixed;
+     right: 50%;
+     transform: translate(50%);
+}
+
+.delete button{
+    background-color: white;
+    font-weight: bold;
+    padding: 2%;
+    border-radius: 3px;
+    border: 1px solid black;
+}
+
+.delete button:hover{
+    background-color: black;
+    color: white
+}
