@@ -45,7 +45,7 @@ function EnvioForm() {
     // Forma 2 de inserir no estado
     setBrindes([...brindes, produtoSelecionado])
 
-    setProdutoSelecionado("")
+    setProdutoSelecionado("");
 
   }
 
