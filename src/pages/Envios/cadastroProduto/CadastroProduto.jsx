@@ -1,6 +1,7 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import s from "./Cadastro.module.css";
 import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
 
 export function CadastroProduto(){
 
@@ -8,6 +9,11 @@ export function CadastroProduto(){
     const preco = useRef();
     const descricao = useRef();
     const imagem = useRef();
+    const { id } = useParams();
+    let idn = id && !isNaN(parseInt(id)) ? parseInt(id) : 0;
+    console.log("id", id);
+
+    const navigate = useNavigate();
 
     function body (){
 
@@ -21,23 +27,52 @@ export function CadastroProduto(){
 
 async function handleSubmit(e){
     e.preventDefault();
+    let sucesso = "produto cadastrado";
+    let fracasso = "não foi possível cadastrar seu produto";
 
-    let post = await requisitar(body());
+    if(idn){
+        sucesso = "produto editado!"
+        fracasso = "algo deu errado!"
+    }
 
-    if(post){
+    let request = await requisitar(body(), idn);
+
+    if(request){
         nome.current.value = "";
         preco.current.value = "";
         descricao.current.value = "";
         imagem.current.value = "";
-        alert("produto cadastrado com sucesso!");
+        alert(sucesso);
+    navigate("/telaListagem", {state: {atualizado: true} });
     }else{
-        alert("não foi possível cadastrar seu produto");
+        alert(fracasso);
     }
 }
 
+    useEffect(()=>{
+        if(idn){
+            buscaId();
+        }
+    }, []);
+
+    async function buscaId(){
+        let item = await getId(id);
+        console.log("busca id", item)
+
+        if(!item){
+            navigate("");
+            return 
+        }
+
+        nome.current.value = item.nome;
+        preco.current.value = item.preco;
+        descricao.current.value = item.descricao;
+        imagem.current.value = item.descricao;
+    }
+
     return (
     <section className={s.form}>
-        <h1>Cadastro do produto</h1>
+        <h1>descrição do produto</h1>
     <form onSubmit={handleSubmit}>
 
         <div className={s.nomePreco}>
@@ -61,14 +96,32 @@ async function handleSubmit(e){
         <input id="url" type="text" className={s.textos} ref={imagem} required />
 
         <div className={s.btn}>
-            <button type="submit">Cadastrar</button>
+            <button type="submit">Confirmar</button>
         </div>
     </form>
     </section>)
 }
 
-async function requisitar(body) {
-  const url = "http://localhost:3001/produtos";
+async function requisitar(body, id=0) {
+  let url = "http://localhost:3001/produtos";
+
+  if(id){
+    url = `http://localhost:3001/produtos/${id}`;
+    return axios.put(url, body, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+  .then(response => {
+
+   
+    return response.data;
+  })
+  .catch(error => {
+    console.log(error);
+    return null;
+  });
+  }
 
   return axios.post(url, body, {
     headers: {
@@ -82,4 +135,17 @@ async function requisitar(body) {
     console.log(error);
     return null;
   });
+}
+
+
+async function getId(id){
+    
+try {
+    const response = await axios.get(`http://localhost:3001/produtos/${id}`);
+    return response.data;
+  } catch (error) {
+    console.log("Erro ao buscar produto:", error.message);
+    return null;
+  }
+
 }

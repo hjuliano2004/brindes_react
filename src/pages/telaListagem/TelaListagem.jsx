@@ -2,38 +2,56 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react"
 import React from "react";
 import e from "./telaListagem.module.css";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 export function TelaListagem(){
 
     const [lista, setLista] = useState([]);
     const [deletar, setDeletar] = useState("");
     const divDelete = useRef();
+    const edicao = useRef();
+    const navigate = useNavigate();
+
+    const location = useLocation();
+
 
     useEffect(()=>{
         listar();
 
         function handleclickOutside(e){
-            if(divDelete.current && !divDelete.current.contains(e.target)){
-
-                if(e.target.tagName == "BUTTON"){
+            if(e.target.tagName == "BUTTON"){
                     return
                 }
+            if(divDelete.current && !divDelete.current.contains(e.target)){
                 setDeletar("");
+            }
+            if(edicao.current && !edicao.current.contains(e.target)){
+                navigate("");
             }
         }
 
         window.addEventListener("click", handleclickOutside )
-
         return () => {
             window.removeEventListener("click", handleclickOutside);
         }
     }, []);
 
+    useEffect(()=>{
+        if(location.state?.atualizado){
+            listar();
+        }
+    },[location.state])
+
+
+
+
     async function listar(){
         let lista = await requisitar();
-        console.log(lista);
         setLista(lista);
     }
+
+
+
 
     function render(item){
     return(
@@ -51,11 +69,14 @@ export function TelaListagem(){
                 onClick={()=>{reqDeletar(item)}}>Deletar</button>
 
 
-                <button className={e.bPreto}>Editar</button>
+                <button className={e.bPreto}
+                onClick={()=>{navigate(`editar/${item.id}`)}}>Editar</button>
             </div>
         </div>
     )
 }
+
+
 
     async function excluir(id, nome){
     let url = `http://localhost:3001/produtos/${id}`;
@@ -77,6 +98,7 @@ export function TelaListagem(){
     return false;
 }
 
+
     function reqDeletar(item){
 
         function limpa(){
@@ -89,28 +111,32 @@ export function TelaListagem(){
             <button onClick={()=>{excluir(item.id, item.nome)}}>Deletar</button>
             <button onClick={limpa}>Cancelar</button>
         </div>);
-
-
     }
 
+
+
     return (
-        <>
-        <div ref={divDelete}>
-            {deletar}
-        </div>
+        <main>
+
+             <section ref={edicao} className={e.edicao}>
+            <Outlet />
+        </section>
+        
         <section className={e.container}>
-
-
-               
+   
                  {lista.map((item) =>{
                     return render(item)
                 })}
                 
-
-                
-
         </section>
-        </>
+       
+
+        <div ref={divDelete}>
+            {deletar}
+        </div>
+
+        
+        </main>
     )
 }
 

@@ -44,15 +44,17 @@
 }
 
 .delete{
-     border: 2px dashed black;
-     width: 30%;
-     text-align: center;
-     background-color: white;
      
+position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 30%;
+    text-align: center;
+    background-color: white;
+    border: 2px dashed black;
 
-     position: fixed;
-     right: 50%;
-     transform: translate(50%);
 }
 
 .delete button{
@@ -66,4 +68,14 @@
 .delete button:hover{
     background-color: black;
     color: white
+}
+
+.edicao{
+    position: fixed;
+    background-color: white;
+    left: 50%;
+    transform: translate(-50%);
+    top: 20%;
+    border: 2px solid black;
+    border-radius: 4px;
 }
