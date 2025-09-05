@@ -116,7 +116,9 @@ export function TelaListagem(){
         </div>);
     }
 
-    async function pesquisa(){
+    async function pesquisa(e){
+        e.preventDefault();
+        
         let lista = await requisitar();
         let array = [];
 
@@ -147,10 +149,10 @@ export function TelaListagem(){
             <Outlet />
         </section>
 
-    <div className={e.barra}>
+    <form className={e.barra} onSubmit={pesquisa}>
             <input type="text" ref={barra} placeholder="caneca..." />
-            <button onClick={pesquisa}>ok</button>
-    </div>
+            <button>ok</button>
+    </form>
         
         <section className={e.container}>
                  {lista.map((item) =>{
