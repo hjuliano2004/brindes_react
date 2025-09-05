@@ -68,6 +68,9 @@ export function TelaListagem(){
             throw new Error(response.message)}else{
             alert(nome+" excluído com sucesso!");
             setDeletar("");
+
+            let lista = await requisitar();
+            setLista(lista);
             return true;
         }
     } catch (e) {
