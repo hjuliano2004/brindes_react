@@ -82,7 +82,7 @@ async function handleSubmit(e){
             <input id="nome" type="text" ref={nome} required />
         </div>
 
-        <div >
+        <div>
             <label htmlFor="preco">Preço do produto:</label>
             <input id="preco" type="number" ref={preco} required />
         </div>

@@ -11,8 +11,8 @@ export function TelaListagem(){
     const divDelete = useRef();
     const edicao = useRef();
     const navigate = useNavigate();
-
     const location = useLocation();
+    const barra = useRef();
 
 
     useEffect(()=>{
@@ -113,6 +113,28 @@ export function TelaListagem(){
         </div>);
     }
 
+    async function pesquisa(){
+        let lista = await requisitar();
+        let array = [];
+
+        let busca = barra.current.value.toUpperCase();
+
+        if(!busca){
+            setLista(lista);
+            return;
+        }
+
+
+        for(let i=0;i<lista.length;i++){
+
+            let nome = lista[i].nome.toUpperCase();
+            if(nome.includes(busca)){
+                array.push(lista[i]);
+            }
+        }
+
+        setLista(array);
+    }
 
 
     return (
@@ -121,13 +143,16 @@ export function TelaListagem(){
              <section ref={edicao} className={e.edicao}>
             <Outlet />
         </section>
+
+    <div className={e.barra}>
+            <input type="text" ref={barra} placeholder="caneca..." />
+            <button onClick={pesquisa}>ok</button>
+    </div>
         
         <section className={e.container}>
-   
                  {lista.map((item) =>{
                     return render(item)
                 })}
-                
         </section>
        
 
