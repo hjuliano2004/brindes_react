@@ -11,7 +11,11 @@ function App() {
       <Route path="/" Component={EnvioForm} />
       <Route path="/envios" Component={EnvioList} />
       <Route path="/cadastroProduto" Component={CadastroProduto} />
-      <Route path="/telaListagem" Component={TelaListagem} />
+      
+      <Route path="/TelaListagem" Component={TelaListagem}>
+          <Route path="editar/:id" element={<CadastroProduto />} />
+        </Route>
+
     </Routes>
   );
 }
